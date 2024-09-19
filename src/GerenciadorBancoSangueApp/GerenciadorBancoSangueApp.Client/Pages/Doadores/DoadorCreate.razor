@@ -27,10 +27,16 @@
                             <MudItem xs="6">
                                 <MudTextField Label="Email"
                                               @bind-Value="model.Email" For="@(() => model.Email)" />
+                            </MudItem>               
+                            <MudItem xs="6">
+                                <MudNumericField @bind-Value="model.Peso" Label="Informe o peso" Format="F1" Variant="Variant.Text" For="@(() => model.Peso)" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField Label="Tipo Sanguíneo"
+                                              @bind-Value="model.TipoSanguineo" For="@(() => model.TipoSanguineo)" />
                             </MudItem>
                             <MudItem xs="7">
-                                <MudDatePicker 
-                                    @bind-Date="model.DataNascimento" Label="Data de Nascimento" For="@(() => model.DataNascimento)"/>
+                                <MudDatePicker @bind-Date="model.DataNascimento" Label="Data de Nascimento" For="@(() => model.DataNascimento)" />
                             </MudItem>
                             <MudItem xs="5">
                                 <MudSelect @bind-Value="model.Genero" Label="Gênero" For="@(() => model.Genero)">
@@ -40,13 +46,6 @@
                                     }
                                 </MudSelect>
                             </MudItem>
-                            <MudItem xs="6">
-                                <MudNumericField @bind-Value="model.Peso" Label="Informe o peso" Format="F1" Variant="Variant.Text" For="@(() => model.Peso)" />
-                            </MudItem>
-                            <MudItem xs="6">
-                                <MudTextField Label="Tipo Sanguíneo"
-                                              @bind-Value="model.TipoSanguineo" For="@(() => model.TipoSanguineo)" />
-                            </MudItem>
                             <MudItem xs="12">
                                 <MudTextField Label="Fator Rh"
                                               @bind-Value="model.FatorRh" For="@(() => model.FatorRh)" />
@@ -54,7 +53,7 @@
                         </MudGrid>
                     </MudCardContent>
                     <MudCardActions>
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto">Cadastrar</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mt-2">Cadastrar</MudButton>
                     </MudCardActions>
                 </MudCard>
             </MudItem>
