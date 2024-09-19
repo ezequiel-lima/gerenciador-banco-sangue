@@ -1,0 +1,86 @@
+﻿@page "/doadores/criar"
+@rendermode InteractiveAuto
+
+<PageTitle>Doador</PageTitle>
+
+<MudContainer>
+    <EditForm EditContext="@editContext" OnValidSubmit="OnValidSubmit">
+
+        <DataAnnotationsValidator />
+
+        @if (editContext.GetValidationMessages().Any())
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-6">
+                <ValidationSummary />
+            </MudAlert>
+        }
+
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12" Class="mt-6">
+                <MudCard>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="6">
+                                <MudTextField Label="Nome Completo"
+                                              @bind-Value="model.NomeCompleto" For="@(() => model.NomeCompleto)" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField Label="Email"
+                                              @bind-Value="model.Email" For="@(() => model.Email)" />
+                            </MudItem>
+                            <MudItem xs="7">
+                                <MudDatePicker 
+                                    @bind-Date="model.DataNascimento" Label="Data de Nascimento" For="@(() => model.DataNascimento)"/>
+                            </MudItem>
+                            <MudItem xs="5">
+                                <MudSelect @bind-Value="model.Genero" Label="Gênero" For="@(() => model.Genero)">
+                                    @foreach (var genero in _generos)
+                                    {
+                                        <MudSelectItem Value="genero">@genero</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudNumericField @bind-Value="model.Peso" Label="Informe o peso" Format="F1" Variant="Variant.Text" For="@(() => model.Peso)" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <MudTextField Label="Tipo Sanguíneo"
+                                              @bind-Value="model.TipoSanguineo" For="@(() => model.TipoSanguineo)" />
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudTextField Label="Fator Rh"
+                                              @bind-Value="model.FatorRh" For="@(() => model.FatorRh)" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto">Cadastrar</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</MudContainer>
+
+@code {
+    Doador model;
+    private EditContext editContext;
+    private List<string> _generos = new List<string> { "Masculino", "Feminino" };
+
+    protected override Task OnInitializedAsync()
+    {
+        model ??= new()
+            {
+                Id = Guid.NewGuid()
+            };
+
+        editContext = new EditContext(model);
+        return base.OnInitializedAsync();
+    }
+
+    private void OnValidSubmit(EditContext context)
+    {
+        Console.WriteLine(model);
+        StateHasChanged();
+    }
+}
