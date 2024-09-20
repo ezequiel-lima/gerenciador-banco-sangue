@@ -1,5 +1,6 @@
-using GerenciadorBancoSangueApp.Client.Pages;
 using GerenciadorBancoSangueApp.Components;
+using GerenciadorBancoSangueApp.Services;
+using GerenciadorBancoSangueApp.Services.Interfaces;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddMudServices();
+
+builder.Services.AddScoped<IDoadorService, DoadorService>();
 
 var app = builder.Build();
 
