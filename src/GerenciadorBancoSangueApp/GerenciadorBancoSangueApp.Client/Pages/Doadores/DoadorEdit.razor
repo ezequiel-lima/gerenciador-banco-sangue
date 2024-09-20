@@ -1,11 +1,10 @@
-﻿@page "/doadores/criar"
+﻿@page "/doadores/editar/{Id:guid}"
 @rendermode InteractiveAuto
+@inject IDoadorService DoadorService
 
-<PageTitle>Doador</PageTitle>
-
+<PageTitle>Editar Doador</PageTitle>
 
 <EditForm EditContext="@editContext" OnValidSubmit="OnValidSubmit">
-
     <DataAnnotationsValidator />
 
     @if (editContext.GetValidationMessages().Any())
@@ -17,7 +16,7 @@
 
     <MudGrid Justify="Justify.Center">
         <MudItem xs="12" Class="mt-6">
-            <MudText Class="ml-4" Typo="Typo.h6">Cadastrar Novo Doador</MudText>
+            <MudText Class="ml-4" Typo="Typo.h6">Editar Doador</MudText>
             <MudCardContent>
                 <MudGrid>
                     <MudItem xs="6">
@@ -53,31 +52,29 @@
                 </MudGrid>
             </MudCardContent>
             <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mt-2">Cadastrar</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mt-2">Salvar Alterações</MudButton>
             </MudCardActions>
         </MudItem>
     </MudGrid>
 </EditForm>
 
-
 @code {
-    Doador model;
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private Doador model;
     private EditContext editContext;
     private List<string> _generos = new List<string> { "Masculino", "Feminino" };
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        model ??= new()
-            {
-                Id = Guid.NewGuid()
-            };
-
+        model = await DoadorService.ObterDoadorPorIdAsync(Id);
         editContext ??= new EditContext(model);
     }
 
-    private void OnValidSubmit(EditContext context)
+    private async Task OnValidSubmit(EditContext context)
     {
-        Console.WriteLine(model);
+        Console.WriteLine("Doador atualizado " + model);
         StateHasChanged();
     }
 }

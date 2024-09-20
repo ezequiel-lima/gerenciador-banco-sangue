@@ -42,12 +42,12 @@
         <MudTd DataLabel="Opções">
             <MudStack Spacing="2" Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
                 <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error">Deletar</MudButton>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Warning">Editar</MudButton>
+                <MudButton Href=@($"/doadores/editar/{@context.Id}") Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Warning">Editar</MudButton>
             </MudStack>
         </MudTd>
     </RowTemplate>
     <PagerContent>
-        <MudTablePager />
+        <MudTablePager RowsPerPageString="Linhas por página"/>
     </PagerContent>
 </MudTable>
 
