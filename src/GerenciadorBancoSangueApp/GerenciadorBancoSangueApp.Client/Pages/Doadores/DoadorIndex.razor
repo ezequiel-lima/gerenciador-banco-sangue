@@ -2,6 +2,7 @@
 @rendermode InteractiveAuto
 @inject IDoadorService DoadorService
 @inject IDialogService DialogService
+@inject ISnackbar Snackbar
 
 <PageTitle>Doador</PageTitle>
 
@@ -11,14 +12,14 @@
     </MudItem>
     <MudItem xs="6" Class="d-flex justify-end">
         <MudButton Class="mr-4" Href="/doadores/criar" Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Add" Color="Color.Success">
-            Cadastrar Novo Doador
+            Novo Doador
         </MudButton>
     </MudItem>
 </MudGrid>
 
 <MudTable Items="@doadores" Hover="true" Filter="new Func<Doador,bool>(FilterFunc1)" Height="65vh" Breakpoint="Breakpoint.Sm" Virtualize="true" FixedHeader="true">
     <ToolBarContent>
-        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"></MudTextField>
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"></MudTextField>
     </ToolBarContent>
     <HeaderContent>
         <MudTh>Id</MudTh>
@@ -62,9 +63,9 @@
 
 @code {
     private List<Doador> doadores;
-    private string searchString1 = "";
+    private string searchString = "";
 
-    private bool FilterFunc1(Doador doador) => FilterFunc(doador, searchString1);
+    private bool FilterFunc1(Doador doador) => FilterFunc(doador, searchString);
 
     private bool FilterFunc(Doador doador, string searchString)
     {
@@ -101,8 +102,14 @@
             var deleteResult = await DoadorService.ExcluirDoadorAsync(doador.Id);
             if (deleteResult)
             {
+                ShowSnackbar(doador.NomeCompleto, Variant.Filled);
                 doadores.Remove(doador);
             }
         }
+    }
+
+    void ShowSnackbar(string message, Variant variant)
+    {
+        Snackbar.Add($"Registro de {message} excluido com sucesso", Severity.Normal, c => c.SnackbarVariant = variant);
     }
 }
