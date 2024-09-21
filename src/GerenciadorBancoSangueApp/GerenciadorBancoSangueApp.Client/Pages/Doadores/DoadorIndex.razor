@@ -15,7 +15,7 @@
     </MudItem>
 </MudGrid>
 
-<MudTable Items="@doadores" Hover="true" Filter="new Func<Doador,bool>(FilterFunc1)">
+<MudTable Items="@doadores" Hover="true" Filter="new Func<Doador,bool>(FilterFunc1)" Height="65vh" Breakpoint="Breakpoint.Sm" Virtualize="true" FixedHeader="true">
     <ToolBarContent>
         <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"></MudTextField>
     </ToolBarContent>
@@ -40,9 +40,17 @@
         <MudTd DataLabel="Tipo Sanguíneo">@context.TipoSanguineo</MudTd>
         <MudTd DataLabel="Fator RH">@context.FatorRh</MudTd>
         <MudTd DataLabel="Opções">
-            <MudStack Spacing="2" Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center">
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error">Deletar</MudButton>
-                <MudButton Href=@($"/doadores/editar/{@context.Id}") Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Warning">Editar</MudButton>
+            <MudStack Spacing="2" Row="true">
+                <MudTooltip Text="Editar registro">
+                    <MudButton Href=@($"/doadores/editar/{@context.Id}") Variant="Variant.Outlined" Color="Color.Warning"> 
+                        <MudIcon Icon="@Icons.Material.Filled.Edit" />
+                    </MudButton>
+                </MudTooltip>
+                <MudTooltip Text="Deletar registro">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Error">
+                        <MudIcon Icon="@Icons.Material.Filled.Delete" />
+                    </MudButton>
+                </MudTooltip>
             </MudStack>
         </MudTd>
     </RowTemplate>
