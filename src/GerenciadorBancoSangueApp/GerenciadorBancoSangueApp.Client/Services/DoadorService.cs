@@ -38,5 +38,16 @@ namespace GerenciadorBancoSangueApp.Services
         {
             return await Task.FromResult(doadores);
         }
+
+        public async Task<bool> ExcluirDoadorAsync(Guid id)
+        {
+            var doador = doadores.FirstOrDefault(d => d.Id == id);
+            if (doador != null)
+            {
+                doadores.Remove(doador);
+                return await Task.FromResult(true);
+            }
+            return await Task.FromResult(false);
+        }
     }
 }

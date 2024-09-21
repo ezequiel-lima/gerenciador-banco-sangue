@@ -6,5 +6,6 @@ namespace GerenciadorBancoSangueApp.Services.Interfaces
     {
         Task<Doador?> ObterDoadorPorIdAsync(Guid id);
         Task<List<Doador>> ObterTodosDoadoresAsync();
+        Task<bool> ExcluirDoadorAsync(Guid id);
     }
 }

@@ -1,8 +1,7 @@
 ﻿@page "/doadores/criar"
 @rendermode InteractiveAuto
 
-<PageTitle>Doador</PageTitle>
-
+<PageTitle>Criar Doador</PageTitle>
 
 <EditForm EditContext="@editContext" OnValidSubmit="OnValidSubmit">
 
@@ -52,13 +51,13 @@
                     </MudItem>
                 </MudGrid>
             </MudCardContent>
-            <MudCardActions>
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto mt-2">Cadastrar</MudButton>
+            <MudCardActions Class="d-flex justify-center">
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="mt-2">Cadastrar</MudButton>
+                <MudButton Href="/doadores" Variant="Variant.Filled" Color="Color.Secondary" Class="mt-2 ml-2">Voltar</MudButton>
             </MudCardActions>
         </MudItem>
     </MudGrid>
 </EditForm>
-
 
 @code {
     Doador model;

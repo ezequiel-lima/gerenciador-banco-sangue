@@ -1,6 +1,7 @@
 ﻿@page "/doadores"
 @rendermode InteractiveAuto
 @inject IDoadorService DoadorService
+@inject IDialogService DialogService
 
 <PageTitle>Doador</PageTitle>
 
@@ -47,7 +48,7 @@
                     </MudButton>
                 </MudTooltip>
                 <MudTooltip Text="Deletar registro">
-                    <MudButton Variant="Variant.Outlined" Color="Color.Error">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="() => DeleteUserAsync(context)">
                         <MudIcon Icon="@Icons.Material.Filled.Delete" />
                     </MudButton>
                 </MudTooltip>
@@ -79,5 +80,29 @@
     protected override async Task OnInitializedAsync()
     {
         doadores = await DoadorService.ObterTodosDoadoresAsync();
+    }
+
+    private async Task DeleteUserAsync(Doador doador)
+    {
+        var parameters = new DialogParameters<DoadorDelete>
+        {
+            { x => x.ContentText, $"Você realmente deseja excluir o registro de {doador.NomeCompleto}? Esta ação não poderá ser desfeita." },
+            { x => x.ButtonText, "Excluir" },
+            { x => x.Color, Color.Error }
+        };
+
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+
+        var dialog = await DialogService.ShowAsync<DoadorDelete>("Excluir", parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            var deleteResult = await DoadorService.ExcluirDoadorAsync(doador.Id);
+            if (deleteResult)
+            {
+                doadores.Remove(doador);
+            }
+        }
     }
 }
